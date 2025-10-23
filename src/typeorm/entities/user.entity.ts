@@ -1,10 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn     } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn  , OneToOne  , JoinColumn } from "typeorm";
+import { Profile } from "./profile.entity"
 
 @Entity({name:"users"})
 export class User {
 
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column({unique:true})
     username:string;
@@ -21,5 +22,10 @@ export class User {
     @Column({nullable:true})
     authStrategy?: string;
 
+
+
+    @OneToOne(() => Profile , (profile)=> profile.user)
+    @JoinColumn()
+    profile: Profile;
 
 }
