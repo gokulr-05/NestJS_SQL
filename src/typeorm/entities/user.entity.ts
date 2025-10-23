@@ -24,7 +24,7 @@ export class User {
 
 
 
-    @OneToOne(() => Profile , (profile)=> profile.user)
+    @OneToOne(() => Profile , (profile)=> profile.user, {cascade:true})
     @JoinColumn()
     profile: Profile;
 
