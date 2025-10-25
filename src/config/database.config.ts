@@ -1,13 +1,9 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
-import { User } from './typeorm/entities/user.entity';
-import { Profile } from './typeorm/entities/profile.entity';
-import * as dotenv from 'dotenv';
-import * as path from 'path';
+import { registerAs } from '@nestjs/config';
+import { DataSourceOptions } from 'typeorm';
+import { User } from '../typeorm/entities/user.entity';
+import { Profile } from '../typeorm/entities/profile.entity';
 
-// Load environment variables
-dotenv.config({ path: path.join(process.cwd(), '.env') });
-
-export const dataSourceOptions: DataSourceOptions = {
+export default registerAs('database', (): DataSourceOptions => ({
   type: (process.env.DB_TYPE as any) || 'mysql',
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '3306', 10),
@@ -18,6 +14,5 @@ export const dataSourceOptions: DataSourceOptions = {
   migrations: ['dist/migrations/*.js'],
   synchronize: process.env.DB_SYNCHRONIZE === 'true' || false,
   logging: process.env.DB_LOGGING === 'true' || false,
-};
+}));
 
-export const AppDataSource = new DataSource(dataSourceOptions);
