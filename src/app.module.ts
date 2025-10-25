@@ -7,18 +7,10 @@ import { Profile } from "./typeorm/entities/profile.entity"
 import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { ApiTokenCheckMiddleware } from './common/middleware/api-token-check.middleware';
-
+import { dataSourceOptions } from './data-source';
+ 
 @Module({
-  imports: [ TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'password',
-      database: 'nestjs_mysql',
-      entities: [User, Profile],
-      synchronize: true,
-    }), UsersModule,],
+  imports: [ TypeOrmModule.forRoot(dataSourceOptions), UsersModule,],
   controllers: [AppController],
   providers: [AppService],
 })
